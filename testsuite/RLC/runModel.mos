@@ -1,0 +1,86 @@
+// Pfad zu den Backend-Dateien. Achtung: "/" am Ende nicht vergessen!
+root_dir := "D:/Programme/NMB/src/BackEnd/";
+
+setCommandLineOptions({"-d=rml,noevalfunc,gen", "+g=MetaModelica"});
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+// LOAD PACKAGES
+loadFile(root_dir + "DAE.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAE_List.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/BaseAvlSet.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/AvlSetInt.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/List.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/Array.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/Util.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/BaseHashTable.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/HashTableCrefListCref.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/HashTableCrefExp.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/File.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Util/CrefReplacement.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/ComponentRef.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/BackendVariable.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/BackendEquation.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/BackendDAEUtil.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/BackendDAECreate.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/Matching.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/Sorting.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/Expression.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/ExpressionSimplify.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/DerReplacement.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/EquationSolve.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/Differentiate.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "DAEUtil/RemoveSimpleEquations.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Dump/DumpDAE.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Dump/ConvDAE_List.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "ParseXML.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile(root_dir + "Template/CodegenMatlab.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+// LOAD MODEL
+loadFile("nmb_RLC_1.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile("model_minimal.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+// Aufruf der Hauptfunktion
+msg := Main.main(root_dir);
+
+// Dump der Daten in eine Datei schreiben und mit den erwarteten vergleichen.
+// Das Ergebnis des Vergleichs findet sich in der Datei protocol.txt.
+// Es handelt sich dabei um die Angaben des Programms diff. Sollte die Datei
+// keine Einträge enthalten, waren die Daten identisch.
+writeFile("generated.txt",msg);
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+system("run_diff.sh");
+
+// Temporäre Dateien löschen.
+system("rm OpenModelica_Scripting* Main_main*");
+msg := getErrorString(); if msg <> "" then print(msg); end if;

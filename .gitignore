@@ -22,3 +22,8 @@
 /OpenModelicaSetup/
 /testsuite/libraries-for-testing/.ccache/
 trace.txt
+./OMCompiler/common
+./OMEdit/common
+./OMShell/common
+./OMPlot/common
+./OMNotebook/common

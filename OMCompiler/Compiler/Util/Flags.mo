@@ -1420,6 +1420,12 @@ constant ConfigFlag SIMULATION = CONFIG_FLAG(151, "simulation",
   SOME("u"), EXTERNAL(), BOOL_FLAG(false), NONE(),
   Gettext.gettext("Simulates the last model in the given Modelica file."));
 
+constant ConfigFlag CREATE_NMB_DAE = CONFIG_FLAG(152, "createNMBDAE",
+  NONE(), EXTERNAL(), BOOL_FLAG(false), NONE(),
+  Gettext.gettext("Create a BackendDAE instance of the NanoModelicaBackend rather than a 
+normal BackendDAE. Only for educational purposes."));
+
+
 function getFlags
   "Loads the flags with getGlobalRoot. Assumes flags have been loaded."
   input Boolean initialize = true;

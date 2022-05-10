@@ -1,0 +1,5 @@
+LOG_SUCCESS       | info    | The initialization finished successfully without homotopy method.
+assert            | info    | The following assertion has been violated at time 0.002000
+|                 | |       | u == i
+assert            | info    | Ein ASSERT!
+LOG_SUCCESS       | info    | The simulation finished successfully.

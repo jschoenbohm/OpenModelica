@@ -1,0 +1,8 @@
+loadFile("simpleCircuitEqns.mo");
+simulate(simpleCircuitEqns);
+
+readFile("simpleCircuitEqns.log");
+
+val(u,{0.0, 0.5, 1.0},"simpleCircuitEqns_res.mat");
+
+
