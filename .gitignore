@@ -26,3 +26,8 @@
 /testsuite/libraries-for-testing/.ccache/
 /testsuite/flattening/modelica/ffi/FFITest/Resources/BuildProjects/gcc/libFFITestLib.dll
 trace.txt
+./OMCompiler/common
+./OMEdit/common
+./OMShell/common
+./OMPlot/common
+./OMNotebook/common

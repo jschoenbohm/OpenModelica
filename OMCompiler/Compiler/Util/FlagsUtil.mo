@@ -412,7 +412,8 @@ constant list<Flags.ConfigFlag> allConfigFlags = {
   Flags.OBFUSCATE,
   Flags.FMU_RUNTIME_DEPENDS,
   Flags.FRONTEND_INLINE,
-  Flags.EXPOSE_LOCAL_IOS
+  Flags.EXPOSE_LOCAL_IOS,
+  Flags.CREATE_NMB_DAE
 };
 
 public function new

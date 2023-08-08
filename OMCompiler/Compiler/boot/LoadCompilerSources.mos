@@ -278,7 +278,13 @@ if true then /* Suppress output */
     "../BackEnd/VisualXML.mo",
     "../BackEnd/XMLDump.mo",
     "../BackEnd/ZeroCrossings.mo",
-
+    // Sb Anfang
+    "../BackEnd/NMB_Files/NMBDAE.mo",
+    "../BackEnd/NMB_Files/NMBDAEDump.mo",
+    "../BackEnd/NMB_Files/AnalyzeModel.mo",
+    "../BackEnd/NMB_Files/NMBDAECreate.mo",
+    
+    // Sb Ende
   // "NBackend Classes"
     "../NBackEnd/Classes/NBackendDAE.mo",
     "../NBackEnd/Classes/NBEquation.mo",

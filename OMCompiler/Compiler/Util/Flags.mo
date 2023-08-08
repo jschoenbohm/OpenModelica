@@ -1423,6 +1423,7 @@ constant ConfigFlag SIMULATION = CONFIG_FLAG(151, "simulation",
   SOME("u"), EXTERNAL(), BOOL_FLAG(false), NONE(),
   Gettext.gettext("Simulates the last model in the given Modelica file."));
 
+
 constant ConfigFlag OBFUSCATE = CONFIG_FLAG(152, "obfuscate",
   NONE(), EXTERNAL(), STRING_FLAG("none"),
   SOME(STRING_DESC_OPTION({
@@ -1456,6 +1457,13 @@ constant ConfigFlag EXPOSE_LOCAL_IOS = CONFIG_FLAG(155, "nonStdExposeLocalIOs",
   Gettext.gettext("Keeps input/output prefixes for unconnected input/output connectors at requested levels, provided they are public, " +
                   "0 meaning top-level (standard Modelica), 1 inputs/outputs of top-level components, >1 going deeper. " +
                   "This flag is particularly useful for FMI export. It extends the Modelica standard when exposing local inputs."));
+
+constant ConfigFlag CREATE_NMB_DAE = CONFIG_FLAG(156, "createNMBDAE",
+  NONE(), EXTERNAL(), BOOL_FLAG(false), NONE(),
+  Gettext.gettext("Create a BackendDAE instance of the NanoModelicaBackend rather than a
+normal BackendDAE. Only for educational purposes."));
+
+
 
 function getFlags
   "Loads the flags with getGlobalRoot. Assumes flags have been loaded."

@@ -1,0 +1,70 @@
+Start
+1
+Simulation has 30 Equations
+Eq[1]: C.n.v = ground.p.v
+
+Eq[2]: C.n.v = SinV.p.v
+
+Eq[3]: C.p.v = R1.n.v
+
+Eq[4]: R1.p.v = I.n.v
+
+Eq[5]: I.p.v = SinV.n.v
+
+Eq[6]: (I.n.i + R1.p.i) = 0.0
+
+Eq[7]: (C.p.i + R1.n.i) = 0.0
+
+Eq[8]: (SinV.n.i + I.p.i) = 0.0
+
+Eq[9]: (SinV.p.i + (C.n.i + ground.p.i)) = 0.0
+
+Eq[10]: ground.p.v = 0.0
+
+Eq[11]: R1.R_actual = (R1.R * (1.0 + (R1.alpha * (R1.T_heatPort - R1.T_ref))))
+
+Eq[12]: R1.v = (R1.R_actual * R1.i)
+
+Eq[13]: R1.LossPower = (R1.v * R1.i)
+
+Eq[14]: R1.T_heatPort = R1.T
+
+Eq[15]: 0.0 = (R1.p.i + R1.n.i)
+
+Eq[16]: R1.i = R1.p.i
+
+Eq[17]: R1.v = (R1.p.v - R1.n.v)
+
+Eq[18]: C.i = (C.C * der.C.v)
+
+Eq[19]: 0.0 = (C.p.i + C.n.i)
+
+Eq[20]: C.i = C.p.i
+
+Eq[21]: C.v = (C.p.v - C.n.v)
+
+Eq[22]: (I.L * der.I.i) = I.v
+
+Eq[23]: 0.0 = (I.p.i + I.n.i)
+
+Eq[24]: I.i = I.p.i
+
+Eq[25]: I.v = (I.p.v - I.n.v)
+
+Eq[26]: SinV.signalSource.y = (SinV.signalSource.offset + (SinV.signalSource.amplitude * sin((((6.283185307179586 * SinV.signalSource.f) * (time - SinV.signalSource.startTime)) + SinV.signalSource.phase))))
+
+Eq[27]: SinV.v = SinV.signalSource.y
+
+Eq[28]: 0.0 = (SinV.p.i + SinV.n.i)
+
+Eq[29]: SinV.i = SinV.p.i
+
+Eq[30]: SinV.v = (SinV.p.v - SinV.n.v)
+
+
+2
+3
+4
+5
+6
+Ende

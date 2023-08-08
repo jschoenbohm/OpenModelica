@@ -84,6 +84,12 @@ import Util;
 import VarTransform;
 import Vectorization;
 import ZeroCrossings;
+// Sb
+import AnalyzeModel;
+import NMBDAE;
+import NMBDAECreate;
+import NMBDAEDump;
+import File;
 
 public function lower "This function translates a DAE, which is the result from instantiating a
   class, into a more precise form, called BackendDAE.BackendDAE defined in this module.
@@ -117,6 +123,14 @@ protected
   String neqStr, nvarStr;
   Integer varSize, eqnSize, numCheckpoints;
   BackendDAE.EqSystem syst;
+  
+  // Sb
+  NMBDAE.ImportDAE nmbImportDAE;
+  String s = "";
+  File.File file = File.File();  
+  String filename = "nmb_";
+  //
+  
 algorithm
   numCheckpoints:=ErrorExt.getNumCheckpoints();
   try
@@ -178,6 +192,41 @@ algorithm
                                                     NONE(),
                                                     NONE()
                                                     ));
+                                                 
+  // Sb
+  if Flags.getConfigBool(Flags.CREATE_NMB_DAE) then    
+    // dump the model
+    AnalyzeModel.analyze(syst, globalKnownVars,
+      localKnownVars, extVars, aliasVars, ieqnarr,
+      constrs, clsAttrs, inCache, inEnv, functionTree,
+      einfo, extObjCls, symjacs, inExtraInfo);
+      
+      print("\nAfter Analyze\n");
+      
+    nmbImportDAE := NMBDAECreate.createDAE(syst, globalKnownVars,
+      //localKnownVars, extVars, aliasVars, 
+      ieqnarr //,
+      //constrs, clsAttrs, inCache, inEnv, functionTree,
+      //einfo, extObjCls, symjacs, 
+      ,inExtraInfo
+      );
+      
+
+    filename := match inExtraInfo
+      local String s1, s2;
+      case BackendDAE.EXTRA_INFO(s1, s2) 
+      then "nmb_" + s2 + ".mo";
+      else "nmb_data.mo";
+    end match;      
+      
+    print("\n***********************************************\n");
+    s := NMBDAEDump.dumpImportDAE(nmbImportDAE);
+    print("\nWrite " + filename + "\n");
+    File.open(file, filename, File.Mode.Write);
+    File.write(file,s);
+    print("\n***********************************************\n");
+  end if;
+//                                                    
   BackendDAEUtil.checkBackendDAEWithErrorMsg(outBackendDAE);
   BackendDAEUtil.checkAdjacencyMatrixSolvability(syst, functionTree,BackendDAEUtil.isInitializationDAE(outBackendDAE.shared));
   if Flags.isSet(Flags.DUMP_BACKENDDAE_INFO) then
