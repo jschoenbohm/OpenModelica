@@ -421,6 +421,17 @@ algorithm
   end match;
 end printSubscriptStr;
 
+/* Sb: copied from older version */
+public function printPath "Print a Path."
+  input Absyn.Path p;
+protected
+  String s;
+algorithm
+  s := AbsynUtil.pathString(p);
+  Print.printBuf(s);
+end printPath;
+
+
 public function unparseModificationStr
   "Prettyprints a Modification to a string."
   input Absyn.Modification inModification;

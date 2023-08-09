@@ -23,18 +23,18 @@ public function analyze
   input BackendDAE.Variables aliasVars;
   input BackendDAE.EquationArray ieqnarr;
   input list<DAE.Constraint> constrs;
-  input list<DAE.ClassAttributes> clsAttrs;  
+  input list<DAE.ClassAttributes> clsAttrs;
   input FCore.Cache inCache;
-  input FCore.Graph inEnv;  
+  input FCore.Graph inEnv;
   input DAE.FunctionTree functionTree;
   input BackendDAE.EventInfo einfo;
   input BackendDAE.ExternalObjectClasses extObjCls;
   input BackendDAE.SymbolicJacobians symjacs;
   input BackendDAE.ExtraInfo inExtraInfo;
-    
+
 algorithm
     print("syst::{}\n"); // Equations, Variables
-    BackendDump.dumpEqSystem(syst, "syst");    
+    BackendDump.dumpEqSystem(syst, "syst");
 
     print("BackendDAE.SHARED(\n");
     print("globalKnownVars,\n"); // Parameter, Konstanten
@@ -48,32 +48,32 @@ algorithm
 
     print("aliasVars,\n");
     BackendDump.dumpVariables(aliasVars,"aliasVars");
-    
+
     print("ieqnarr,\n"); // Initial Equations
     BackendDump.dumpEquationArray(ieqnarr,"ieqnarr");
-    
+
     print("\nBackendEquation.emptyEqns(),\n");
-    
+
     print("\nconstrs,\n");
     print("DAE.Constraints brauchen eine separate dump-Funktion\n");
-    
+
     print("\nclsAttrs,\n");
     print("DAE.ClassAttributes brauchen eine separate dump-Funktion\n");
-    
+
     print("\ninCache,\n");
     print("FCore.Cache brauchen eine separate dump-Funktion\n");
-    
-    
+
+
     print("\ninEnv,\n");
     print("\n" + inExtraInfo.fileNamePrefix + ".gml\n");
     FGraphDump.dumpGraph(inEnv, inExtraInfo.fileNamePrefix + ".gml");
-    
+
     print("\nfunctionTree,\n");
     DAEDump.dumpFunctionTree(functionTree,"functionTree");
     print("\n einfo,\n");
-    anaEventInfo(einfo);    
+    anaEventInfo(einfo);
     print("\nextObjCls,\n");
-    anaExternalObjectClasses(extObjCls);    
+    anaExternalObjectClasses(extObjCls);
     print("\nBackendDAE.SIMULATION(),\n");
     print("\nsymjacs\n");
     anaSymbolicJacobians(symjacs);
@@ -83,7 +83,7 @@ algorithm
     print("\nBackendDAE.emptyDAEModeData,\n");
     BackendDump.dumpBackendDAEModeData(BackendDAE.emptyDAEModeData);
     print("NONE(),\n");
-    print("NONE()\n");  
+    print("NONE()\n");
 end analyze;
 
 
@@ -163,24 +163,26 @@ end anaExternalObjectClass;
 
 
 function anaSymbolicJacobians
-// type SymbolicJacobians = list<tuple<Option<SymbolicJacobian>, SparsePattern, SparseColoring>>;
+// type SymbolicJacobians = list<tuple<Option<SymbolicJacobian>, SparsePattern, SparseColoring, NonlinearPattern>>;
   input BackendDAE.SymbolicJacobians symjacs;
   protected
     Option<BackendDAE.SymbolicJacobian> o_symjac;
     BackendDAE.SymbolicJacobian symjac;
     BackendDAE.SparsePattern pattern;
     BackendDAE.SparseColoring coloring;
+    BackendDAE.SparsePattern nonlinear;
   algorithm
     for tup in symjacs loop
-      (o_symjac, pattern, coloring) := tup;
+      (o_symjac, pattern, coloring, nonlinear) := tup;
       _ := match o_symjac
       case SOME(symjac)
       algorithm
         anaSymbolicJacobian(symjac);
         BackendDump.dumpSparsityPattern(pattern,"Pattern");
         BackendDump.dumpSparseColoring(coloring,"Coloring");
+        BackendDump.dumpSparsityPattern(nonlinear,"Nonlinear Pattern");
         then "";
-      else 
+      else
       algorithm
         print("\nKeine SymbolicJacobians\n");
         then "";
@@ -214,7 +216,7 @@ algorithm
   for cref in dependendVars loop
     print(ComponentReference.printComponentRefStr(cref));
   end for;
-  
+
 end anaSymbolicJacobian;
 
 function anaExtraInfo
@@ -228,7 +230,7 @@ input BackendDAE.ExtraInfo inExtraInfo;
 algorithm
   _ := match inExtraInfo
     local String s1, s2;
-  case BackendDAE.EXTRA_INFO(s1, s2) 
+  case BackendDAE.EXTRA_INFO(s1, s2)
     algorithm
       print("description: " + s1 + "\n");
       print("file name prefix:" + s2 + "\n");
